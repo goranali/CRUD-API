@@ -33,8 +33,17 @@ public class MarvelCharacterService {
 
     public List<MarvelCharacter> searchCharactersByName(String name) {
         return repository.findByNameContainingIgnoreCase(name);
+        
     }
 
+    public List<MarvelCharacter> searchCharacters(String name, String role) {
+    return repository.findAll().stream()
+            .filter(c -> name == null || name.isBlank()
+                    || c.getName().toLowerCase().contains(name.trim().toLowerCase()))
+            .filter(c -> role == null || role.isBlank()
+                    || role.equalsIgnoreCase(c.getRole()))
+            .toList();
+}
     public MarvelCharacter addCharacter(MarvelCharacter character) {
         character.setCharacterId(null);
         return repository.save(character);

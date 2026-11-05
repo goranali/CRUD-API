@@ -5,7 +5,22 @@
     <div class="container">
       <h1 class="display-4 fw-bold">The Avengers Roster</h1>
       <p class="lead">Marvel's most famous heroes, loaded live from the database.</p>
-      <!-- search form goes here in Step 5 -->
+      <form method="get" action="/" class="row g-2 mt-3" style="max-width: 700px;">
+  <div class="col-md-5">
+    <input type="text" name="name" class="form-control" placeholder="Search by name..." value="${name!''}">
+  </div>
+  <div class="col-md-4">
+    <select name="role" class="form-select">
+      <option value="">All roles</option>
+      <#list ["Team leader", "Heavy hitter", "Street-level hero", "Inventor", "Villain"] as r>
+        <option value="${r}" <#if (role!'') == r>selected</#if>>${r}</option>
+      </#list>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-warning w-100">Search</button>
+  </div>
+</form>
     </div>
   </header>
 

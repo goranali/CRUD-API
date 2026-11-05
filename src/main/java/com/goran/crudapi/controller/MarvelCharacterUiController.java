@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
@@ -18,11 +19,15 @@ public class MarvelCharacterUiController {
         this.service = service;
     }
 
-    @GetMapping("/")
-    public String gallery(Model model) {
-        model.addAttribute("characters", service.getAllCharacters());
-        return "index";
-    }
+@GetMapping("/")
+public String gallery(@RequestParam(required = false) String name,
+                      @RequestParam(required = false) String role,
+                      Model model) {
+    model.addAttribute("characters", service.searchCharacters(name, role));
+    model.addAttribute("name", name);
+    model.addAttribute("role", role);
+    return "index";
+}
 
     @GetMapping("/characters/{id}")
     public String details(@PathVariable Long id, Model model, HttpServletResponse response) {
