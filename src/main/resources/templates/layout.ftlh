@@ -25,14 +25,16 @@
     </div>
   </nav>
 
-  <main class="container my-5 flex-grow-1">
-    <#if message??>
+  <#if message??>
+    <div class="container mt-4">
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    </#if>
+    </div>
+  </#if>
 
+  <main class="flex-grow-1">
     <#nested>
   </main>
 

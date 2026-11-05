@@ -49,6 +49,7 @@ public class MarvelCharacterService {
         existing.setRole(updated.getRole());
         existing.setSpecies(updated.getSpecies());
         existing.setPowerLevel(updated.getPowerLevel());
+        existing.setImageUrl(updated.getImageUrl());
         return repository.save(existing);
     }
 
