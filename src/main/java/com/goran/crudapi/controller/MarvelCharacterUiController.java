@@ -6,9 +6,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MarvelCharacterUiController {
@@ -38,7 +41,18 @@ public String gallery(@RequestParam(required = false) String name,
         model.addAttribute("character", character);
         return "details";
     }
+@GetMapping("/characters/new")
+public String newForm(Model model) {
+    model.addAttribute("character", new MarvelCharacter());
+    return "character-form";
+}
 
+@PostMapping("/characters")
+public String create(@ModelAttribute MarvelCharacter character, RedirectAttributes ra) {
+    MarvelCharacter saved = service.addCharacter(character);
+    ra.addFlashAttribute("message", saved.getName() + " was added");
+    return "redirect:/";
+}
     // Your service throws an exception when an id doesn't exist.
     // This turns that into null so we can show the friendly error page instead.
     private MarvelCharacter findOrNull(Long id) {
