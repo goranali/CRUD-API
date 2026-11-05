@@ -53,6 +53,39 @@ public String create(@ModelAttribute MarvelCharacter character, RedirectAttribut
     ra.addFlashAttribute("message", saved.getName() + " was added");
     return "redirect:/";
 }
+@GetMapping("/characters/{id}/edit")
+public String editForm(@PathVariable Long id, Model model, HttpServletResponse response) {
+    MarvelCharacter character = findOrNull(id);
+    if (character == null) {
+        return notFound(id, model, response);
+    }
+    model.addAttribute("character", character);
+    return "character-form";
+}
+
+@PostMapping("/characters/{id}")
+public String update(@PathVariable Long id, @ModelAttribute MarvelCharacter form,
+                     RedirectAttributes ra, Model model, HttpServletResponse response) {
+    if (findOrNull(id) == null) {
+        return notFound(id, model, response);
+    }
+    MarvelCharacter updated = service.updateCharacter(id, form);
+    ra.addFlashAttribute("message", updated.getName() + " was updated");
+    return "redirect:/characters/" + id;
+}
+
+@PostMapping("/characters/{id}/delete")
+public String delete(@PathVariable Long id, RedirectAttributes ra,
+                     Model model, HttpServletResponse response) {
+    MarvelCharacter character = findOrNull(id);
+    if (character == null) {
+        return notFound(id, model, response);
+    }
+    String name = character.getName();
+    service.deleteCharacter(id);
+    ra.addFlashAttribute("message", name + " was removed");
+    return "redirect:/";
+}
     // Your service throws an exception when an id doesn't exist.
     // This turns that into null so we can show the friendly error page instead.
     private MarvelCharacter findOrNull(Long id) {

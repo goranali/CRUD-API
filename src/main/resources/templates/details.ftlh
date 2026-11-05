@@ -27,7 +27,10 @@
 
             <div class="d-flex gap-2 mt-4">
               <a href="/characters/${character.characterId?c}/edit" class="btn btn-warning">Edit</a>
-              <!-- Delete button goes here in Step 7 -->
+              <form method="post" action="/characters/${character.characterId?c}/delete"
+      onsubmit="return confirm('Are you sure you want to remove ${character.name?js_string}?');">
+  <button type="submit" class="btn btn-outline-danger">Delete</button>
+</form>
             </div>
           </div>
         </div>
