@@ -86,6 +86,10 @@ public String delete(@PathVariable Long id, RedirectAttributes ra,
     ra.addFlashAttribute("message", name + " was removed");
     return "redirect:/";
 }
+@GetMapping("/about")
+public String about() {
+    return "about";
+}
     // Your service throws an exception when an id doesn't exist.
     // This turns that into null so we can show the friendly error page instead.
     private MarvelCharacter findOrNull(Long id) {
