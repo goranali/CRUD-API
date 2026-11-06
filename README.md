@@ -1,14 +1,32 @@
-# Marvel Character API
+# Marvel Superheroes Gallery
 
-## API Overview
+## Overview
 
-The Marvel Character API is a Spring Boot REST API for the Marvel heroes from my Assignment 2 website, the Marvel Superheroes Gallery. THEY are my favorite superheros. You can add, view, update, and delete characters, filter them by universe, and search them by name.
+The Marvel Superheroes Gallery is a Spring Boot app for the Marvel heroes from my Assignment 2 website. THEY are my favorite superheros. It has two front ends that share one back end and one database:
 
-**Base URL:**
+- **Web pages** built with FreeMarker templates, where you can browse, search, add, edit, and delete characters
+- **A REST API** that returns JSON at `/api/characters`
 
-- **Production:** https://crud-api-g9xh.onrender.com/api/characters
+**Live Site:** https://crud-api-g9xh.onrender.com
 
-All requests and responses use JSON. Every character needs a `name` and a `description`.
+**API Base URL:** https://crud-api-g9xh.onrender.com/api/characters
+
+> **IMPORTANT:** This runs on Render's free plan, so the service sleeps when no one is using it. The first request after a break can take up to a minute to load.
+
+## Pages
+
+| Route | Description |
+| ----- | ----------- |
+| `GET /` | Gallery of all characters, with search by name and filter by role |
+| `GET /characters/{id}` | Details page for one character |
+| `GET /characters/new` | Form to add a new character |
+| `POST /characters` | Saves a new character, then returns to the gallery with a success message |
+| `GET /characters/{id}/edit` | Edit form, pre-filled with the character's current values |
+| `POST /characters/{id}` | Saves the edits, then shows the details page with a success message |
+| `POST /characters/{id}/delete` | Removes the character, then returns to the gallery with a success message |
+| `GET /about` | About page, including how the app is built |
+
+An ID that doesn't exist shows a friendly "Character not found" page.
 
 ## Entity Attributes
 
@@ -24,8 +42,11 @@ Characters are saved in the `characters` table in a Neon PostgreSQL database.
 | `role`        | `String` | Optional; what the hero does on the team      |
 | `species`     | `String` | Optional; human, Asgardian, etc.              |
 | `powerLevel`  | `String` | Optional; how strong the hero is              |
+| `imageUrl`    | `String` | Optional; a local path like `/images/thor.png` or a web link. A placeholder shows if it's empty |
 
 ## API Endpoints
+
+All API requests and responses use JSON. Every character needs a `name` and a `description`.
 
 | Method   | Path                              | Purpose                                         | Success Status   |
 | -------- | --------------------------------- | ----------------------------------------------- | ---------------- |
@@ -54,7 +75,8 @@ Content-Type: application/json
   "universe": "Marvel",
   "role": "Spy",
   "species": "Human",
-  "powerLevel": "Peak human"
+  "powerLevel": "Peak human",
+  "imageUrl": "/images/placeholder.svg"
 }
 ```
 
@@ -75,7 +97,8 @@ Content-Type: application/json
   "universe": "Marvel",
   "role": "Inventor",
   "species": "Human",
-  "powerLevel": "High"
+  "powerLevel": "High",
+  "imageUrl": "/images/ironman.png"
 }
 ```
 
@@ -83,7 +106,6 @@ Change `2` to the ID of the character you want to update.
 
 ## Deployment
 
-- **Live API on Render:** [All Marvel characters](https://crud-api-g9xh.onrender.com/api/characters)
+- **Live Site:** [Marvel Superheroes Gallery](https://crud-api-g9xh.onrender.com)
+- **Live API:** [All Marvel characters](https://crud-api-g9xh.onrender.com/api/characters)
 - **GitHub Repository:** [CRUD-API](https://github.com/goranali/CRUD-API)
-
-> **IMPORTANT:** This runs on Render's free plan, so the service sleeps when no one is using it. The first request after a break can take up to a minute to load.
